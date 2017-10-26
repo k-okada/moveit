@@ -30,6 +30,12 @@ include_directories(benchmarks/include)
 
 include_directories(${catkin_INCLUDE_DIRS})
 include_directories(${Boost_INCLUDE_DIRS})
+include_directories(${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+
+set(ENV{CPATH} "") # delete CPATH
+foreach(catkin_INCLUDE_DIR ${catkin_INCLUDE_DIRS})
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -idirafter ${catkin_INCLUDE_DIR}") # make sure /opt/ros/.. located after system path (/usr/include)
+endforeach()
 
 link_directories(${Boost_LIBRARY_DIRS})
 link_directories(${catkin_LIBRARY_DIRS})
